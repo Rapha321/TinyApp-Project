@@ -1,0 +1,26 @@
+<%- include partials/_header%>
+
+
+<body>
+<%- include("login") %>
+
+  <ul>
+    <h4>Create new short URL <a href="/urls/new">here</a>!</h4>
+    <p><b>Your Short URLs:</b></p>
+    <% for (let eachURL in urls) { %>
+
+      <% if (currentUser.id === urls[eachURL].id) { %>
+        <li>
+          <form method="POST" action="/urls/<%=eachURL%>/delete">
+            <%= eachURL %>: <%= urls[eachURL].URL %>
+            <a href="/urls/<%= eachURL %>">Edit</a>
+            <button>Delete <i class="fas fa-trash-alt"></i></button>
+          </form>
+        </li>
+      <% } %>
+
+    <% }; %>
+  </ul>
+
+</body>
+</html>

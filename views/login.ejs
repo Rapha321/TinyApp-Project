@@ -1,0 +1,20 @@
+
+<% if(!currentUser) { %>
+
+  <h4>Register <a href="/register">here</a></h4>
+
+  <h4>OR</h4>
+
+  <form action="/login" method="POST">
+    <p><b>Login:</b></p>
+    <label>Email: </label><input type="email" name="email">
+    <label>Password: </label><input type="password" name="password">
+    <button>Sign in</button>
+  </form>
+<% } else { %>
+    <h3> <b><%= currentUser.email %></b> welcome to TinyApp!</h3>
+    <form method="POST" action="/logout">
+      <button>Logout</button>
+    </form>
+<% } %>
+
