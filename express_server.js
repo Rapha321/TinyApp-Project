@@ -69,7 +69,7 @@ const urlDatabase = {
 
 //Home page
 app.get("/", (req, res) => {
-  res.send('<p> <b>Welcome to TinyApp!</b> <br> Register for free <a href="/register">here</a>! <br>Already a member! Login <a href="/login">here</a>!</p>');
+  res.send('<p> <h1>Welcome to TinyApp!</h1> <br> Register for free <a href="/register">here</a>! <br>Already a member? Login <a href="/login">here</a>!</p>');
 });
 
 
@@ -119,7 +119,7 @@ app.get("/urls/:id", (req, res) => {
     let templateVars = {  urls: urlDatabase,
                           shortURL: req.params.id,
                           longURL: urlDatabase[req.params.id].URL,
-                          currentUser: req.session['user_id']
+                          currentUser: users[req.session['user_id']]
                         };
     res.render("urls_show", templateVars);
   }

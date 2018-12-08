@@ -12,8 +12,8 @@
     <button>Sign in</button>
   </form>
 <% } else { %>
-    <h3> <b><%= currentUser.email %></b> welcome to TinyApp!</h3>
     <form method="POST" action="/logout">
+      <h3> <b><%= currentUser.email %></b> is now logged in...</h3>
       <button>Logout</button>
     </form>
 <% } %>
