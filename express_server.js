@@ -137,19 +137,15 @@ app.get('/login', (req, res) => {
 // registration endpoint
 app.post("/register", (req, res) => {
   let user_id = generateRandomUserID();
+  let exist = false;
   //if user do not fill email/password. Send error message
   if (req.body.email === "" || req.body.password === "") {
     res.status(400).send('<p>Email and/or Password cannot be blank!</p><a href="/register">Back to registration page.</a>');
   }
   else {
     //if user register with an email existed in users database. Send error message
-    let existingUserEmail = [];
-    let exist = false;
     for (let item in users) {
-     existingUserEmail.push(users[item].email);
-    }
-    for (let i = 0; i < existingUserEmail.length; i++) {
-      if (req.body.email === existingUserEmail[i]) {
+      if (req.body.email === users[item].email) {
         exist = true;
         break; //stop the for loop
       }
@@ -160,7 +156,7 @@ app.post("/register", (req, res) => {
     res.status(400).send('<p>Email already exist! Please <a href="/register">register</a> with another email or <a href="/login">Login here.</a>!</p>');
   }
   else {
-    //data entered in registration are added to users database
+    //data entered in registration form by new user are added to users database
     users[user_id] = {
                         id: user_id,
                         email: req.body.email,
