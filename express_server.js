@@ -141,25 +141,35 @@ app.post("/register", (req, res) => {
   if (req.body.email === "" || req.body.password === "") {
     res.status(400).send('<p>Email and/or Password cannot be blank!</p><a href="/register">Back to registration page.</a>');
   }
-  //if user register with an email existed in users database. Send error message
-  let existingUserEmail = [];
-  for (let item in users) {
-    existingUserEmail.push(users[item].email);
-  }
-  for (let i = 0; i < existingUserEmail.length; i++) {
-    if (req.body.email === existingUserEmail[i]) {
-    res.status(400).send('<p>Email already exist! Please <a href="/register">register</a> with another email or <a href="/login">Login here.</a>!</p>');
+  else {
+    //if user register with an email existed in users database. Send error message
+    let existingUserEmail = [];
+    let exist = false;
+    for (let item in users) {
+     existingUserEmail.push(users[item].email);
+    }
+    for (let i = 0; i < existingUserEmail.length; i++) {
+      if (req.body.email === existingUserEmail[i]) {
+        exist = true;
+        break; //stop the for loop
+      }
     }
   }
-  //data entered in registration are added to users database
-  users[user_id] = {
-                      id: user_id,
-                      email: req.body.email,
-                      password: bcrypt.hashSync(req.body.password, 10)
-                    }
-  req.session.user_id = user_id; //setting cookie for newly registered user
-  res.redirect("/urls");
-})
+
+  if (exist) {
+    res.status(400).send('<p>Email already exist! Please <a href="/register">register</a> with another email or <a href="/login">Login here.</a>!</p>');
+  }
+  else {
+    //data entered in registration are added to users database
+    users[user_id] = {
+                        id: user_id,
+                        email: req.body.email,
+                        password: bcrypt.hashSync(req.body.password, 10)
+                      }
+    req.session.user_id = user_id; //setting cookie for newly registered user
+    res.redirect("/urls");
+  }
+});
 
 
   // function to find ID of current user
