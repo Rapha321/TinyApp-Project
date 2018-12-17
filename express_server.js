@@ -141,14 +141,14 @@ app.post("/register", (req, res) => {
   //if user do not fill email/password. Send error message
   if (req.body.email === "" || req.body.password === "") {
     res.status(400).send('<p>Email and/or Password cannot be blank!</p><a href="/register">Back to registration page.</a>');
+    return;
   }
-  else {
-    //if user register with an email existed in users database. Send error message
-    for (let item in users) {
-      if (req.body.email === users[item].email) {
-        exist = true;
-        break; //stop the for loop
-      }
+
+  //if user register with an email existed in users database. Send error message
+  for (let item in users) {
+    if (req.body.email === users[item].email) {
+      exist = true;
+      break; //stop the loop
     }
   }
 
@@ -267,17 +267,3 @@ app.post("/logout", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Tiny app listening on port ${PORT}!`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
