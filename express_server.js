@@ -3,6 +3,9 @@ var cookieSession = require('cookie-session')
 const app = express();
 const PORT = process.env.PORT || 3000;
 const bcrypt = require('bcrypt');
+const router = express.Router();
+
+app.use('/.netlify/functions/api', router);
 
 app.use(cookieSession({
   name: 'session',
